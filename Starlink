@@ -1,0 +1,96 @@
+pip install python-pptx
+from pptx import Presentation
+from pptx.util import Inches, Pt
+
+def add_title_slide(prs, title, subtitle, presenter):
+    slide_layout = prs.slide_layouts[0]  # Title Slide layout
+    slide = prs.slides.add_slide(slide_layout)
+    title_box = slide.shapes.title.text_frame.text = title
+    subtitle_box = slide.placeholders[1].text_frame.text = subtitle
+    presenter_box = slide.placeholders[2].text_frame.text = presenter
+
+def add_bullet_slide(prs, title, bullets):
+    slide_layout = prs.slide_layouts[1]  # Title and Content layout
+    slide = prs.slides.add_slide(slide_layout)
+    title_box = slide.shapes.title.text_frame.text = title
+    content_box = slide.placeholders[1].text_frame
+    for bullet in bullets:
+        p = content_box.add_paragraph()
+        p.text = bullet
+        p.level = 0  # Adjust the indentation as needed
+
+def create_presentation():
+    prs = Presentation()
+
+    # Title Slide
+    add_title_slide(prs, "Starlink: Transforming Education in Developing Countries",
+                    "Replace outdated textbooks with quality internet education.",
+                    "Suheib Mohamed, Computer Programming Student At Algonquin")
+
+    # Slides
+    slides_data = [
+        ("Significance of Internet Access in Education", [
+            "Global Need: Internet access is crucial globally.",
+            "67% of school-age children lack access (UNICEF & ITU, 2020).",
+            "Why Internet Access is Vital:",
+            "Leverage free courses, interactive lessons, and 3D visualizations.",
+            "Dynamic learning for high-achieving students.",
+            "Impact on students without reliable internet in higher education."
+        ]),
+        ("What is Starlink", [
+            "Overview: Global internet service provider developed by SpaceX.",
+            "Deployment initiated in 2019 using SpaceX's Falcon 9.",
+            "5500 satellites deployed, aiming for 12000 for global access.",
+            "Mission aligned with SpaceX's goal of advancing space technology and providing global internet access."
+        ]),
+        ("Starlink's Potential Impact on Educational Quality", [
+            "Unique Educational Access: Access to high-quality materials.",
+            "Success in remote areas: Mascowpetung Nation in Saskatchewan (BigEagle, 2022)."
+        ]),
+        ("Cost Analysis & Progress", [
+            "Residential Packages: Cost: $99/month with a $499 one-time fee. Aimed at diverse users.",
+            "Business Packages & Speed: Options starting at CA$185/month.",
+            "Speed: Download 40 to 220+ Mbps, upload 8 to 25+ Mbps. Latency: 25-60 ms."
+        ]),
+        ("Regulatory Challenges & Competition", [
+            "Regulatory Barriers: Global Challenges: Operating in 60+ countries.",
+            "Cost Competitiveness: Predicted to match or be lower than traditional providers.",
+            "Market Landscape & Competition: Global Expansion: Regulatory approvals in 60+ countries.",
+            "Competitors: Amazon's Project Kuiper and Blue Origin's Project Kupuir (delayed)."
+        ]),
+        ("Recommendations & Impact", [
+            "Regulatory Partnership: Global Collaboration: SpaceX partners globally for educational access.",
+            "Recommendation on direct partnership With public education instutiation",
+            "Many of these institutions can also become a marketing approach for SpaceX.",
+            "Subsidized internet services can be a great way to kindle this symbiotic partnership",
+            "Government Collaboration: Long-term partnerships for education reform.",
+            "Many governments are ready to invest in such partnerships as they will be beneficiaries for a well-educated population."
+        ]),
+        ("Socio-Economic Impact", [
+            "Global Education Improvement: Enhancing child and youth education.",
+            "Mitigating Immigration Challenges: Improving living conditions in third-world countries.",
+            "Improving overall live quality for developing countries."
+        ]),
+        ("Strategic Opportunity for SpaceX", [
+            "Supporting education in developing countries creates a new market for SpaceX.",
+            "Investing in Education fosters innovation and drives user base growth.",
+            "Addressing Educational Gaps contributes to societal development and gains access to a broader market.",
+            "Economic decision That aligns with moral values of the company, making it a socially responsible choice."
+        ])
+    ]
+
+    for title, bullets in slides_data:
+        add_bullet_slide(prs, title, bullets)
+
+    # References Slide
+    add_bullet_slide(prs, "References", [
+        "UNICEF & ITU. (2020, December 1). Two-thirds of the world's school-age children have no internet access at home.",
+        "Ars Technica: 'Elon Musk says SpaceX's Starlink will attempt to double user terminal data speeds,' published on November 29, 2023.",
+        "Amazon Official Website: Amazon.",
+        "Starlink Official Website: SpaceX. Starlink - Technology."
+    ])
+
+    prs.save("Starlink_Presentation.pptx")
+
+if __name__ == "__main__":
+    create_presentation()
